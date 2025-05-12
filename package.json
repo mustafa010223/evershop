@@ -1,4 +1,5 @@
 {
+
   "name": "evershop",
   "version": "1.0.0-beta",
   "description": "A shopping cart platform with Express, React and Postgres",
@@ -53,4 +54,21 @@
     "tailwindcss": "^3.2.1",
     "webpack-bundle-analyzer": "^4.5.0"
   }
+
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "dompurify": "^3.2.5",
+    "express": "^5.1.0"
+  },
+  "name": "salevali-ornek-proje",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+
 }

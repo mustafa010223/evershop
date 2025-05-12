@@ -1,5 +1,4 @@
 version: '3.8'
-
 services:
   app:
     image: evershop/evershop:latest
@@ -16,7 +15,6 @@ services:
       - database
     ports:
       - 3000:3000
-  
   #The postgres database: 
   database:
     image: postgres:16
@@ -39,3 +37,22 @@ networks:
 
 volumes:
   postgres-data:
+=======
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+  node_app:
+    build: .
+    container_name: node_app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongodb
+volumes:
+  mongo_data:
+>>>>>>> de4db45b (İlk commit: Proje ESLint düzeltmeleri ile başlatıldı)

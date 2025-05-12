@@ -18,3 +18,4 @@ cypress
 .prettierignore
 .prettierrc
 mysqlToPostgres.js
+.env.production

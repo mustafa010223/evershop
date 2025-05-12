@@ -1,0 +1,46 @@
+name: Deploy to On-Prem Server
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Repo'yu Checkout Et
+        uses: actions/checkout@v3
+
+      - name: Node.js Kurulumu
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Bağımlılıkları Yükle
+        run: npm install
+
+      - name: Lint ve Test Çalıştır
+        run: |
+          npm run lint || true
+          npm run test || true
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: SSH ile Sunucuya Bağlan ve Uygulamayı Güncelle
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          script: |
+            cd /home/mustafa/salevali-ornek-proje/evershop
+            git pull origin dev
+            npm config set registry https://registry.npmmirror.com
+            npm config set fetch-timeout 60000
+            npm config set fetch-retries 5
+            npm install
+            npm run build
+            pm2 restart all

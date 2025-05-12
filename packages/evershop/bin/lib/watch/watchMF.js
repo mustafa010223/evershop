@@ -1,9 +1,12 @@
+// packages/evershop/bin/lib/watch/watchMF.js
+
 const { normalize, basename } = require('path');
 const { Handler } = require('@evershop/evershop/src/lib/middleware/Handler');
 const { error } = require('@evershop/evershop/src/lib/log/logger');
 const { broadcash } = require('./broadcash');
 
-module.exports.watchMF = function (event, path) {
+// Fonksiyona isim veriyoruz: watchMF
+function watchMF(event, path) {
   // Check if path include graphql/types
   if (
     !path.includes(normalize('pages/admin')) &&
@@ -23,15 +26,20 @@ module.exports.watchMF = function (event, path) {
   if (event === 'change') {
     delete require.cache[require.resolve(path)];
   }
+
   if (event === 'unlink') {
     Handler.removeMiddleware(path);
   }
+
   if (event === 'add') {
     Handler.addMiddlewareFromPath(path);
   }
+
   try {
     broadcash();
   } catch (e) {
     error(`Hot Reload Error: ${e.message}`);
   }
-};
+}
+
+module.exports.watchMF = watchMF;
